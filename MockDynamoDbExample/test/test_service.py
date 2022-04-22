@@ -59,3 +59,20 @@ class TestService(TestCase):
         assert response["email"] == email
         assert response["first_name"] == first_name
         assert response["last_name"] == last_name
+
+
+@mock_dynamodb
+def test_create_user():
+    service = Service("user", "test")
+    username = "test-mike"
+    age = 19
+    first_name = "Mike"
+    last_name = "Ross"
+    email = "test_mike@example.com"
+
+    try:
+        service.create_user(username, email, age, first_name, last_name)
+    except Exception as exc:
+        assert False, f"service.create_user raised an exception {exc}"
+    assert True
+    service.delete_table()
