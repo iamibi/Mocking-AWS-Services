@@ -21,9 +21,9 @@ class Service:
         self.__dynamodb = boto3.resource("dynamodb", **resource)
 
         # Get the table
-        self.get_table(table_name)
+        self.__get_table(table_name)
 
-    def get_table(self, table_name: str):
+    def __get_table(self, table_name: str):
         # Get the table from the dynamodb instance
         self.__table = self.__dynamodb.Table(table_name)
 
@@ -34,9 +34,9 @@ class Service:
             # If the table doesn't exist, an exception will be thrown.
             # Create the table if that happens.
             print("The table user doesn't exist. Creating now...")
-            self.create_table(table_name)
+            self.__create_table(table_name)
 
-    def create_table(self, table_name: str):
+    def __create_table(self, table_name: str):
         try:
             table = self.__dynamodb.create_table(
                 TableName=table_name,
